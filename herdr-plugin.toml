@@ -1,0 +1,46 @@
+# herdr-goto: Herdr's Go To tree, across every host.
+#
+# Lists this server's session and every enabled saved machine's session
+# (`herdr machine list`) as one tree: host > workspace > tab/pane, with the
+# agent and its status in columns. Enter focuses the row on its own server
+# and, when Sheprd is in use, switches the Sheprd window to that host.
+#
+# Install on every host you use: herdr plugin install <owner>/herdr-goto
+# (or herdr plugin link <this folder>), then bind it, see README.md.
+
+id = "herdr-goto"
+name = "Go To (all hosts)"
+version = "0.1.0"
+description = "Herdr-style Go To tree for every workspace on every saved machine"
+min_herdr_version = "0.9.0"
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "open"
+title = "Go To (all hosts)"
+description = "Pick any workspace, tab, pane, or agent on any host"
+contexts = ["global"]
+command = ["./goto.py", "--open"]
+
+# Ctrl-K/Ctrl-J: move the picker's selection while it is open (Herdr would
+# otherwise run the keybinding behind the popup), else vim-herdr-navigation.
+[[actions]]
+id = "nav-up"
+title = "Up (Go To picker or vim-herdr-navigation)"
+contexts = ["global"]
+command = ["./nav.sh", "up"]
+
+[[actions]]
+id = "nav-down"
+title = "Down (Go To picker or vim-herdr-navigation)"
+contexts = ["global"]
+command = ["./nav.sh", "down"]
+
+[[panes]]
+id = "goto"
+title = "Go To"
+description = "Go To tree across hosts"
+placement = "popup"
+width = "80%"
+height = "70%"
+command = ["./goto.py"]
